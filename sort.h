@@ -58,4 +58,10 @@ void bitonic_sort(int *array, size_t size);
 void bitonic(int array[], int low, int elements, int sorted, int size);
 void merge_bitonic(int array[], int low, int elements, int sorted);
 void swap_bitonic(int array[], int element1, int element2, int sorted);
+
+void quick_sort_hoare(int *array, size_t size);
+void hoare(int *array, size_t size, int left, int right);
+int subhoare(int *array, size_t size, int left, int right);
+void swap_hoare (int *i, int *ii);
+
 #endif /* __SORT_H__ */
