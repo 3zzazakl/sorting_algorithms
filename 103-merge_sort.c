@@ -7,72 +7,70 @@
  */
 void merge_sort(int *array, size_t size)
 {
-	if (size > 1)
+	int *temp;
+
+	if (array == NULL || size < 2)
+		return;
+
+	temp = malloc(sizeof(int) * size);
+	if (temp == NULL)
+		return;
+
+	merge_recur(array, temp, 0, size);
+	free(temp);
+}
+
+/**
+ * merge_recur - do recursion for merge
+ * @subarray: input subarray
+ * @temp: stored result
+ * @high: high index of array
+ * @low: low index of array
+ */
+void merge_recur(int *subarray, int *temp, size_t high, size_t low)
+{
+	size_t middle;
+
+	if (low - high > 1)
 	{
-		size_t mid, left_size, right_size;
-		int *left, *right;
-
-		mid = size / 2;
-		left_size = mid;
-		right_size = size - mid;
-		left = array;
-		right = array + mid;
-
-		printf("Merging...\n");
-		printf("[left]: ");
-		print_array(left, left_size);
-		printf("[right]: ");
-		print_array(right, right_size);
-
-		merge_sort(left, left_size);
-		merge_sort(right, right_size);
-
-		printf("[Done]: ");
-		merge(array, left, left_size, right, right_size);
-		print_array(array, size);
+		middle = high + (low - high) / 2;
+		merge_recur(subarray, temp, high, middle);
+		merge_recur(subarray, temp, middle, low);
+		merge_subarray(subarray, temp, high, middle, low);
 	}
 }
 
 /**
- * merge - sorting array using merge sort
- * @array: input array
- * @left: left subarray
- * @left_size: size of lift subarray
- * @right: right subarray
- * @right_size: size of right subarray
+ * merge_subarray - merge subarray
+ * @subarray: input subarray
+ * @temp: stored result
+ * @high: high index
+ * @middle: middle index
+ * @low: low index
  */
-void merge(int *array, int *left, size_t left_size,
-			int *right, size_t right_size)
+void merge_subarray(int *subarray, int *temp, size_t high,
+					size_t middle, size_t low)
 {
-	size_t i = 0, ii = 0, iii = 0;
+	size_t i, ii, iii = 0;
 
-	while (i < left_size && ii < right_size)
-	{
-		if (left[i] != right[ii])
-		{
-			array[iii] = left[i];
-			i++;
-		}
-		else
-		{
-			array[iii] = right[ii];
-			ii++;
-		}
-		iii++;
-	}
+	printf("Merging...\n[left]: ");
+	print_array(subarray + high, middle - high);
 
-	while (i < left_size)
-	{
-		array[iii] = left[i];
-		i++;
-		iii++;
-	}
+	printf("[right]: ");
+	print_array(subarray + middle, low - middle);
 
-	while (ii < right_size)
-	{
-		array[iii] = right[ii];
-		ii++;
-		iii++;
-	}
+	for (i = high, ii = middle; i < middle && ii < low; iii++)
+		temp[iii] = (subarray[i] < subarray[ii]) ? subarray[i++] : subarray[ii++];
+
+	for (; i < middle; i++)
+		temp[iii++] = subarray[i];
+
+	for (; ii < low; ii++)
+		temp[iii++] = subarray[ii];
+
+	for (i = high, iii = 0; i < low; i++)
+		subarray[i] = temp[iii++];
+
+	printf("[Done]: ");
+	print_array(subarray + high, low - high);
 }
-
