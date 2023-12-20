@@ -30,5 +30,31 @@ void bubble_sort(int *array, size_t size);
 void selection_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 
+void quick_sort(int *array, size_t size);
+void quick_sort_recu(int *array, int low, int high, size_t size);
+int lpartition(int *array, int low, int high, size_t size);
 
+void shell_sort(int *array, size_t size);
+
+void cocktail_sort_list(listint_t **list);
+void swap_node(listint_t **list, listint_t *node1, listint_t *node2);
+
+void counting_sort(int *array, size_t size);
+
+void merge_sort(int *array, size_t size);
+void merge(int *array, int *left, size_t left_size,
+			int *right, size_t right_size);
+
+void heap_sort(int *array, size_t size);
+void mkheap(int *array, size_t size);
+void fxheap(int *array, size_t root, size_t end, size_t size);
+
+void radix_sort(int *array, size_t size);
+unsigned int count_sort(int *array, size_t size, unsigned int number);
+unsigned int pow_10(unsigned int power);
+
+void bitonic_sort(int *array, size_t size);
+void bitonic(int array[], int low, int elements, int sorted, int size);
+void merge_bitonic(int array[], int low, int elements, int sorted);
+void swap_bitonic(int array[], int element1, int element2, int sorted);
 #endif /* __SORT_H__ */
